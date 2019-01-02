@@ -1,0 +1,5 @@
+<?php foreach ($articles as $article): ?>
+<h1><a href="<?=$this->path('article/read', array('id' => $article['id'])); ?>"><?=$article['title']; ?></a></h1>
+<hr>
+<p><?=$article['content']; ?></p>
+<?php endforeach; ?>
