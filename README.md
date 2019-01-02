@@ -6,7 +6,6 @@ This is a simple MVC framework for building web applications writen in PHP. It's
 2. Configure your web server to have the public folder as the web root.
 3. Open config/config.php and enter your database configuration data and other settings.
 4. Create routes, controller, views and models...
-
 See below for more details.
 
 <h2>Requirments</h2>
