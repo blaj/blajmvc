@@ -12,7 +12,9 @@
     "psr-4": {
       "Blaj\\BlajMVC\\Core\\": "core/",
       "Blaj\\BlajMVC\\Core\\Routing\\": "core/routing/",
-      "Blaj\\BlajMVC\\Model\\": "src/model/"
+      "Blaj\\BlajMVC\\Core\\FormValidation\\": "core/form_validation/",
+      "Blaj\\BlajMVC\\Model\\": "src/model/",
+      "Blaj\\BlajMVC\\Controller\\": "src/controller/"
     }
   }
 }

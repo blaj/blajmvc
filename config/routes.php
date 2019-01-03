@@ -19,4 +19,9 @@ $routeCollection->addRoute('article/read', new Route(
     ]
 ));
 
+$routeCollection->addRoute('article/add', new Route(
+    'article/add',
+    'HomeController@add'
+));
+
 Router::setRouteCollection($routeCollection);
