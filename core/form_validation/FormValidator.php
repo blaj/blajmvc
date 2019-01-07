@@ -2,6 +2,9 @@
 
 namespace Blaj\BlajMVC\Core\FormValidation;
 
+use PDO;
+use PDOException;
+
 class FormValidator
 {
 
@@ -51,7 +54,7 @@ class FormValidator
      */
     public function addRule($value, $name, $displayname, $rules)
     {
-        $this->rules[] = new FormRule($this->remove_tags($value), $name, $displayname, $rules);
+        $this->rules[$name] = new FormRule($this->remove_tags($value), $name, $displayname, $rules);
     }
 
     /**
@@ -122,6 +125,18 @@ class FormValidator
                 case 'url':
                     if(!$this->is_url($ruleData->getValue())) {
                         $this->errors[$ruleData->getName()][] = 'Wartość w polu ' . $ruleData->getDisplayname() . ' nie jest adresem URL.';
+                        return;
+                    }
+                    break;
+                case 'equal_to':
+                    if(!$this->is_equalto($ruleData->getValue(), $this->rules[$rule[1]]->getValue())) {
+                        $this->errors[$ruleData->getName()][] = 'Wartość w polu ' . $ruleData->getDisplayname() . ' nie jest taka sama jak w polu ' . $this->rules[$rule[1]]->getDisplayname() . '.';
+                        return;
+                    }
+                    break;
+                case 'unique':
+                    if(!$this->is_unique($ruleData->getValue(), $rule[1], $ruleData->getName())) {
+                        $this->errors[$ruleData->getName()][] = 'Wartość w polu ' . $ruleData->getDisplayname() . ' jest już zajęta.';
                         return;
                     }
                     break;
@@ -235,6 +250,32 @@ class FormValidator
     {
         if (filter_var($data, FILTER_VALIDATE_URL))
             return true;
+
+        return false;
+    }
+
+    public function is_equalto($from, $to)
+    {
+        if ($from == $to)
+            return true;
+
+        return false;
+    }
+
+    public function is_unique($data, $table, $name)
+    {
+        try {
+            $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PSWD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+        } catch (PDOException $e) {
+            die("PDO Error:" . $e->getMessage());
+        }
+
+        $query = $db->prepare("SELECT * FROM $table WHERE $name = :value");
+        $query->execute(['value' => $data]);
+        $items = $query->fetchAll(\PDO::FETCH_ASSOC);
+        if (!isset($items[0])) {
+            return true;
+        }
 
         return false;
     }

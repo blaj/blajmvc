@@ -46,7 +46,7 @@ class HomeController extends Controller {
                     'value' => $_POST['title'],
                     'name' => 'title',
                     'displayname' => 'Tytuł',
-                    'rules' => 'alphanum'
+                    'rules' => 'unique:article'
                 ),
                 array(
                     'value' => $_POST['content'],
