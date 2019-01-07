@@ -38,18 +38,37 @@ class HomeController extends Controller {
 
     public function add()
     {
-        if (!empty($_POST)) {
-            $validator = new FormValidator();
+        $this->view->body = new View('add.phtml');
 
-            $validator->addRule('title', 'Tytuł', 'required|min_length:3|max_length:10');
-            $validator->addRule('content', 'Treść', 'min_length:3');
+        if (!empty($_POST)) {
+            $validator_config = array(
+                array(
+                    'value' => $_POST['title'],
+                    'name' => 'title',
+                    'displayname' => 'Tytuł',
+                    'rules' => 'alphanum'
+                ),
+                array(
+                    'value' => $_POST['content'],
+                    'name' => 'content',
+                    'displayname' => 'Treść',
+                    'rules' => 'required'
+                )
+            );
+
+            $validator = new FormValidator($validator_config);
+
+            //$validator->addRule($_POST['title'], 'title', 'Tytuł', 'required|min_length:3|max_length:10');
+            //$validator->addRule($_POST['content'], 'content', 'Treść', 'min_length:3');
 
             if ($validator->run()) {
 
+            } else {
+                //echo $validator->showErrors();
+                $this->view->body->errors = $validator->showErrors();
             }
         }
 
-        $this->view->body = new View('add.phtml');
         return $this->view;
     }
 }

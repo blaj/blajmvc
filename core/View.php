@@ -63,6 +63,8 @@ class View
 
     public function asset($file)
     {
+        $url = 'http://' . $_SERVER['SERVER_NAME'] . '/';
 
+        return $url . $file;
     }
 }

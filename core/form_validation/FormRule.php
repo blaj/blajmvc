@@ -13,6 +13,11 @@ class FormRule
     /**
      * @var String
      */
+    private $name;
+
+    /**
+     * @var String
+     */
     private $displayname;
 
     /**
@@ -20,9 +25,10 @@ class FormRule
      */
     private $rules;
 
-    public function __construct($value, $displayname, $rules)
+    public function __construct($value, $name, $displayname, $rules)
     {
         $this->value = $value;
+        $this->name = $name;
         $this->displayname = $displayname;
         $this->rules = $rules;
     }
@@ -33,6 +39,14 @@ class FormRule
     public function getValue(): String
     {
         return $this->value;
+    }
+
+    /**
+     * @return String
+     */
+    public function getName(): String
+    {
+        return $this->name;
     }
 
     /**
