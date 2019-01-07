@@ -210,5 +210,5 @@ bool|Return true if the input is bool|$validator->addRule($_POST['title'], 'titl
 alpha|Retrun true if the input is alpha|$validator->addRule($_POST['title'], 'title', 'Title', 'alpha');
 alphanum|Return true if the input is alphanumeric|$validator->addRule($_POST['title'], 'title', 'Title', 'alphanum');
 url|Return true if the input is URL|$validator->addRule($_POST['title'], 'title', 'Title', 'url');
-equal_to|Return true if the input is the same as equaled value|$validator->addRule($_POST['title'], 'title', 'Title', 'equal_to:re_title'); 
+equal_to|Return true if the input is the same as equaled input|$validator->addRule($_POST['title'], 'title', 'Title', 'equal_to:re_title'); 
 unique|Return true if the input value is unique in database|$validator->addRule($_POST['title'], 'title', 'Title', 'unique:article');
