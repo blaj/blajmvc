@@ -10,6 +10,7 @@ class ComposerStaticInit3ec40ce7ce5e81ff7e940fb3cedc6643
         'B' => 
         array (
             'Blaj\\BlajMVC\\Model\\' => 19,
+            'Blaj\\BlajMVC\\Core\\Utils\\' => 24,
             'Blaj\\BlajMVC\\Core\\Routing\\' => 26,
             'Blaj\\BlajMVC\\Core\\FormValidation\\' => 33,
             'Blaj\\BlajMVC\\Core\\' => 18,
@@ -21,6 +22,10 @@ class ComposerStaticInit3ec40ce7ce5e81ff7e940fb3cedc6643
         'Blaj\\BlajMVC\\Model\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/model',
+        ),
+        'Blaj\\BlajMVC\\Core\\Utils\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/core/utils',
         ),
         'Blaj\\BlajMVC\\Core\\Routing\\' => 
         array (

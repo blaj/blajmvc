@@ -9,6 +9,7 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 require_once '../config/config.php';
 require_once DIR_VENDOR.'autoload.php';
 require_once '../config/routes.php';
+require_once '../config/translations.php';
 
 $router = new Blaj\BlajMVC\Core\Routing\Router();
 $router->setUrl('http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
@@ -18,6 +19,8 @@ if ($router->run()) {
 
     $controllerClass = $router->getControllerClass();
     $controllerAction = $router->getControllerAction();
+
+    Blaj\BlajMVC\Core\Utils\Translations::setLang('en');
 
     $controller = new $controllerClass;
     echo $controller->$controllerAction();

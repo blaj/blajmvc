@@ -11,3 +11,5 @@ define('DIR_CONTROLLER', '../src/controller/');
 define('DIR_MODEL', '../model/');
 define('DIR_TEMPLATE', '../src/template/');
 define('HTTP_SERVER', 'http://blajmvc.pl/');
+
+define('DEFAULT_LANG', 'pl');

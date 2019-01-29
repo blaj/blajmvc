@@ -6,6 +6,7 @@ use Blaj\BlajMVC\Core\Controller;
 use Blaj\BlajMVC\Core\View;
 use Blaj\BlajMVC\Model\ArticleModel;
 use Blaj\BlajMVC\Core\FormValidation\FormValidator;
+use Blaj\BlajMVC\Core\Utils\Translations;
 
 class HomeController extends Controller {
 
@@ -24,6 +25,10 @@ class HomeController extends Controller {
 
         $this->view->body = new View('index.phtml');
         $this->view->body->articles = $articles;
+
+        echo Translations::Translate('test');
+        echo Translations::Translate('lol', ['elo' => '123', 'sraka' => 'sraczkowata']);
+
         return $this->view;
     }
 
