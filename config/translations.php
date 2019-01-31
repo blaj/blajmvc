@@ -3,12 +3,13 @@
 use Blaj\BlajMVC\Core\Utils\Translations;
 
 $translations['pl'] = [
-    'test' => 'Ale ty jesteś brzydki kurwaxddd',
-    'lol' => 'aaa {elo},{sraka}'
+    'not_exist' => 'Tłumaczenie {translation} nie istnieje!',
+    'app_title' => 'BlajMVC - Strona główna'
 ];
 
 $translations['en'] = [
-    'test' => 'You are fucking alcoholic!'
+    'not_exist' => 'Translation {translation} do not exist!',
+    'app_title' => 'BlajMVC - Home page'
 ];
 
 Translations::setTranslations($translations);

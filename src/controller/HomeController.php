@@ -22,12 +22,11 @@ class HomeController extends Controller {
     public function index()
     {
         $articles = $this->articleModel->getAll();
+        $app_title = Translations::Translate('app_title');
 
         $this->view->body = new View('index.phtml');
         $this->view->body->articles = $articles;
-
-        echo Translations::Translate('test');
-        echo Translations::Translate('lol', ['elo' => '123', 'sraka' => 'sraczkowata']);
+        $this->view->body->app_title = $app_title;
 
         return $this->view;
     }

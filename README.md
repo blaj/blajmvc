@@ -212,3 +212,22 @@ alphanum|Return true if the input is alphanumeric|$validator->addRule($_POST['ti
 url|Return true if the input is URL|$validator->addRule($_POST['title'], 'title', 'Title', 'url');
 equal_to|Return true if the input is the same as equaled input|$validator->addRule($_POST['title'], 'title', 'Title', 'equal_to:re_title'); 
 unique|Return true if the input value is unique in database|$validator->addRule($_POST['title'], 'title', 'Title', 'unique:article');
+
+## Translations
+Translations class is used to translate. Translations configs are stored in **config/translations.php**.
+
+##### Config
+```
+$translations['en'] = [
+    'not_exist' => 'Translation {translation} do not exist!',
+    'app_title' => 'BlajMVC - Home page'
+];
+```
+
+##### Usage
+```
+use Blaj\BlajMVC\Core\Utils\Translations;
+
+$app_title = Translations::Translate('app_title');
+$not_exist = Translations::Translate('not_exist', ['translation' => 'something']);
+```

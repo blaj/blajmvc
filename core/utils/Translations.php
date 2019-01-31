@@ -4,19 +4,30 @@ namespace Blaj\BlajMVC\Core\Utils;
 
 class Translations
 {
+    /**
+     * @var string
+     */
     private static $lang;
 
-    private static $translations = [];
+    /**
+     * @var array
+     */
+    private static $translations;
 
-    public static function Translate($name, $toChanges = false)
+    /**
+     * @param string $toTranslate
+     * @param array $toChanges
+     * @return mixed|null
+     */
+    public static function Translate(string $toTranslate, array $toChanges = [])
     {
         if (!isset(self::$lang))
-            self::$lang = DEFAULT_LANG;
+            self::setLang(DEFAULT_LANG);
 
         foreach (self::$translations as $translationsKeys => $translationsValues) {
             if ($translationsKeys == self::$lang) {
                 foreach ($translationsValues as $translationskey => $translationValue) {
-                    if ($translationskey == $name) {
+                    if ($translationskey == $toTranslate) {
                         if ($toChanges) {
                             $result = $translationValue;
                             foreach ($toChanges as $key => $value) {
@@ -32,36 +43,38 @@ class Translations
             }
         }
 
-        return null;
+        return self::Translate('not_exist', ['translation' => $toTranslate]);
     }
 
-    public static function setLang($lang)
+    /**
+     * @param string $lang
+     */
+    public static function setLang(string $lang)
     {
         self::$lang = $lang;
     }
 
-    public static function getLang()
+    /**
+     * @return string
+     */
+    public static function getLang(): string
     {
         return self::$lang;
     }
 
-    public static function setTranslations($translations)
+    /**
+     * @param array $translations
+     */
+    public static function setTranslations(array $translations)
     {
         self::$translations = $translations;
     }
 
-    public static function getTranslations()
+    /**
+     * @return array
+     */
+    public static function getTranslations(): array
     {
         return self::$translations;
-    }
-
-    public static function setCurrentTranslations($currentTranslations)
-    {
-        self::$currentTranslations = $currentTranslations;
-    }
-
-    public static function getCurrentTranslations()
-    {
-        return self::$currentTranslations;
     }
 }

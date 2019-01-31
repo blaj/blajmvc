@@ -20,8 +20,6 @@ if ($router->run()) {
     $controllerClass = $router->getControllerClass();
     $controllerAction = $router->getControllerAction();
 
-    Blaj\BlajMVC\Core\Utils\Translations::setLang('en');
-
     $controller = new $controllerClass;
     echo $controller->$controllerAction();
 } else {
