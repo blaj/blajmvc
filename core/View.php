@@ -3,6 +3,7 @@
 namespace Blaj\BlajMVC\Core;
 
 use Blaj\BlajMVC\Core\Routing\Router;
+use Blaj\BlajMVC\Core\Utils\Translations;
 
 class View
 {
@@ -66,5 +67,15 @@ class View
         $url = 'http://' . $_SERVER['SERVER_NAME'] . '/';
 
         return $url . $file;
+    }
+
+    /**
+     * @param string $toTranslate
+     * @param array $toChanges
+     * @return mixed|null
+     */
+    public function translate(string $toTranslate, array $toChanges = [])
+    {
+        return Translations::Translate($toTranslate, $toChanges);
     }
 }

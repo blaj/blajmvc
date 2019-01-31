@@ -34,6 +34,11 @@ define('DIR_TEMPLATE', '../src/template/');         // Template directory
 define('HTTP_SERVER', 'http://blajmvc.pl/');        // HTTP address
 ```
 
+##### Default language for Translations class
+```
+define('DEFAULT_LANG', 'pl');
+```
+
 ## Routing
 Open config/routes.php and add your routes:
 ```
