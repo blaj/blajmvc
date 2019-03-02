@@ -19,7 +19,7 @@ class RouteCollection
             return null;
         }
     }
-
+    
     public function getAll()
     {
         return $this->routes;

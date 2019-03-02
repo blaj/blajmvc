@@ -6,26 +6,61 @@ use Blaj\BlajMVC\Core\Model;
 
 class ArticleModel extends Model
 {
+    protected $id;
 
-    public function getAll()
+    protected $title;
+
+    protected $content;
+
+    public function getId(): int
     {
-        $query = $this->db->query("SELECT * FROM article");
-        $items = $query->fetchAll(\PDO::FETCH_ASSOC);
-        if (isset($items))
-            return $items;
-        else
-            return null;
+        return $this->id;
     }
 
-    public function getOne($id)
+    public function setId(int $id)
     {
-        $query = $this->db->prepare("SELECT * FROM article WHERE id = :id");
-        $query->execute(['id' => $id]);
-        $items = $query->fetchAll(\PDO::FETCH_ASSOC);
-        if (isset($items[0])) {
-            return $items[0];
-        } else {
-            return null;
-        }
+        $this->id = id;
     }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title)
+    {
+        $this->title = $title;
+    }
+
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content)
+    {
+        $this->content = $content;
+    }
+
+    // public function getAll()
+    // {
+    //     $query = $this->db->query("SELECT * FROM article");
+    //     $items = $query->fetchAll(\PDO::FETCH_ASSOC);
+    //     if (isset($items))
+    //         return $items;
+    //     else
+    //         return null;
+    // }
+    //
+    // public function getOne($id)
+    // {
+    //     $query = $this->db->prepare("SELECT * FROM article WHERE id = :id");
+    //     $query->execute(['id' => $id]);
+    //     $items = $query->fetchAll(\PDO::FETCH_ASSOC);
+    //     if (isset($items[0])) {
+    //         return $items[0];
+    //     } else {
+    //         return null;
+    //     }
+    // }
 }

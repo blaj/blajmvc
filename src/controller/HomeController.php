@@ -5,6 +5,7 @@ namespace Blaj\BlajMVC\Controller;
 use Blaj\BlajMVC\Core\Controller;
 use Blaj\BlajMVC\Core\View;
 use Blaj\BlajMVC\Model\ArticleModel;
+use Blaj\BlajMVC\Repository\ArticleRepository;
 use Blaj\BlajMVC\Core\FormValidation\FormValidator;
 use Blaj\BlajMVC\Core\Utils\Translations;
 
@@ -12,20 +13,22 @@ class HomeController extends Controller {
 
     private $view;
     private $articleModel;
+    private $articleRepository;
 
     public function __construct()
     {
         $this->view = new View('layout/layout.phtml');
         $this->articleModel = new ArticleModel();
+        $this->articleRepository = new ArticleRepository();
     }
 
     public function index()
     {
-        $articles = $this->articleModel->getAll();
         $app_title = Translations::Translate('app_title');
 
+        //$this->articleRepository->save();
+
         $this->view->body = new View('index.phtml');
-        $this->view->body->articles = $articles;
         $this->view->body->app_title = $app_title;
 
         return $this->view;
@@ -33,10 +36,7 @@ class HomeController extends Controller {
 
     public function read()
     {
-        $article = $this->articleModel->getOne($_GET['id']);
-
         $this->view->body = new View('read.phtml');
-        $this->view->body->article = $article;
         return $this->view;
     }
 
