@@ -7,6 +7,7 @@ use Blaj\BlajMVC\Core\View;
 use Blaj\BlajMVC\Model\ArticleModel;
 use Blaj\BlajMVC\Core\FormValidation\FormValidator;
 use Blaj\BlajMVC\Core\Utils\Translations;
+use Blaj\BlajMVC\Core\FlashMessage;
 
 class HomeController extends Controller {
 
@@ -24,6 +25,8 @@ class HomeController extends Controller {
         $articles = $this->articleModel->getAll();
         $app_title = Translations::Translate('app_title');
 
+        FlashMessage::success('register_success', 'Rejestracja zakonczona');
+
         $this->view->body = new View('index.phtml');
         $this->view->body->articles = $articles;
         $this->view->body->app_title = $app_title;
@@ -34,6 +37,9 @@ class HomeController extends Controller {
     public function read()
     {
         $article = $this->articleModel->getOne($_GET['id']);
+
+
+        echo FlashMessage::display('register_success');
 
         $this->view->body = new View('read.phtml');
         $this->view->body->article = $article;
