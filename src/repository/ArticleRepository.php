@@ -6,8 +6,11 @@ use Blaj\BlajMVC\Core\Repository;
 
 class ArticleRepository extends Repository
 {
-    public function __construct()
-    {
+    protected $tableName = 'article';
 
-    }
+    private $id;
+
+    private $title;
+
+    private $content;
 }

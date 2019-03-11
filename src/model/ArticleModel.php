@@ -3,14 +3,15 @@
 namespace Blaj\BlajMVC\Model;
 
 use Blaj\BlajMVC\Core\Model;
+use Blaj\BlajMVC\Core\IModel;
 
-class ArticleModel extends Model
+class ArticleModel extends Model implements IModel
 {
-    protected $id;
+    private $id;
 
-    protected $title;
+    private $title;
 
-    protected $content;
+    private $content;
 
     public function getId(): int
     {
@@ -19,7 +20,7 @@ class ArticleModel extends Model
 
     public function setId(int $id)
     {
-        $this->id = id;
+        $this->id = $id;
     }
 
     public function getTitle(): string
