@@ -1,10 +1,8 @@
 <h1><?=$app_title; ?></h1>
-<?php
-foreach ($articles as $article) {
-    echo '<h2><a href="'. $this->path("article/read", array("id" => $article->getId())) .'">'. $article->getTitle() .'</a></h2>';
-    echo $article->getContent();
-    echo '<hr>';
-}
-?>
+<?php foreach ($articles as $article): ?>
+<h1><a href="<?=$this->path('article/read', array('id' => $article['id'])); ?>"><?=$article['title']; ?></a></h1>
+<hr>
+<p><?=$article['content']; ?></p>
+<?php endforeach; ?>
 
 <a href="<?=$this->path('article/add'); ?>"><?=$this->translate('add_article'); ?></a>
