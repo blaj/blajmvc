@@ -17,6 +17,7 @@ class HomeController extends Controller {
 
     public function __construct()
     {
+        parent::__construct();
         $this->view = new View('layout/layout.phtml');
         $this->articleRepository = new ArticleRepository();
     }
@@ -26,7 +27,6 @@ class HomeController extends Controller {
         $app_title = Translations::Translate('app_title');
 
         $articles = $this->articleRepository->findAll();
-        FlashMessage::success('register_success', 'Rejestracja zakonczona');
 
         $this->view->body = new View('index.phtml');
         $this->view->body->app_title = $app_title;
@@ -38,9 +38,6 @@ class HomeController extends Controller {
     public function read()
     {
         $article = $this->articleRepository->findOneById($_GET['id']);
-
-
-        echo FlashMessage::display('register_success');
 
         $this->view->body = new View('read.phtml');
         $this->view->body->article = $article;
@@ -75,6 +72,8 @@ class HomeController extends Controller {
                 $article->setContent($_POST['content']);
 
                 $this->articleRepository->add($article);
+
+                $this->flashMessage->success('article_add', 'Artykuł został dodany pomyślnie!');
             } else {
                 //echo $validator->showErrors();
                 $this->view->body->errors = $validator->showErrors();

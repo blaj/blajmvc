@@ -4,45 +4,50 @@ namespace Blaj\BlajMVC\Core;
 
 class FlashMessage
 {
-    public static function info($name, $text)
+    public function __construct()
     {
-        self::message($name, $text, 'info');
+
     }
 
-    public static function success($name, $text)
+    public function info($name, $text)
     {
-        self::message($name, $text, 'success');
+        $this->message($name, $text, 'info');
     }
 
-    public static function warning($name, $text)
+    public function success($name, $text)
     {
-        self::message($name, $text, 'warning');
+        $this->message($name, $text, 'success');
     }
 
-    public static function error($name, $text)
+    public function warning($name, $text)
     {
-        self::message($name, $text, 'error');
+        $this->message($name, $text, 'warning');
     }
 
-    public static function message($name, $text, $type)
+    public function error($name, $text)
+    {
+        $this->message($name, $text, 'error');
+    }
+
+    public function message($name, $text, $type)
     {
         $_SESSION['flashMessage'][$name]['text'] = $text;
         $_SESSION['flashMessage'][$name]['type'] = $type;
     }
 
-    public static function display($name)
+    public function display($name)
     {
         $result = '';
 
         if (isset($_SESSION['flashMessage'][$name]))
             $result = $_SESSION['flashMessage'][$name]['text'];
 
-        self::clear($name);
+        $this->clear($name);
 
         return $result;
     }
 
-    public static function clear($name)
+    public function clear($name)
     {
         unset($_SESSION['flashMessage'][$name]);
     }

@@ -317,9 +317,11 @@ class FormValidator
     public function showErrors()
     {
         $html = '<ul>';
-        foreach ($this->errors as $error)
-            foreach ($error as $err)
-            $html .= '<li>'. $err .'</li>';
+        foreach ($this->errors as $error) {
+                foreach ($error as $err) {
+                    $html .= '<li>'. $err .'</li>';
+                }
+        }
 
         $html .= '</ul>';
 

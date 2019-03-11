@@ -1,5 +1,7 @@
 <?php
 
+echo $this->flashMessage->display('article_add');
+
 if (isset($errors)):
     echo $errors;
 endif;

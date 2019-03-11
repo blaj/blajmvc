@@ -3,12 +3,15 @@
 namespace Blaj\BlajMVC\Core;
 
 use Blaj\BlajMVC\Core\Routing\Router;
+use Blaj\BlajMVC\Core\FlashMessage;
 
-class Controller {
+class Controller
+{
+    public $flashMessage;
 
     public function __construct()
     {
-
+        $this->flashMessage = new FlashMessage();
     }
 
     public function redirect($url, $data = false)

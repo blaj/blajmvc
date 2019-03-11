@@ -4,9 +4,12 @@ namespace Blaj\BlajMVC\Core;
 
 use Blaj\BlajMVC\Core\Routing\Router;
 use Blaj\BlajMVC\Core\Utils\Translations;
+use Blaj\BlajMVC\Core\FlashMessage;
 
 class View
 {
+    public $flashMessage;
+
     protected $data = [];
     private static $var = [];
 
@@ -15,6 +18,7 @@ class View
     function __construct($templateFile)
     {
         $this->file = $templateFile;
+        $this->flashMessage = new FlashMessage();
     }
 
     function __toString()
@@ -77,5 +81,10 @@ class View
     public function translate(string $toTranslate, array $toChanges = [])
     {
         return Translations::Translate($toTranslate, $toChanges);
+    }
+
+    public function FlashMessage()
+    {
+        return FlashMessage;
     }
 }
