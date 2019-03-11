@@ -9,6 +9,7 @@ class ComposerStaticInit3ec40ce7ce5e81ff7e940fb3cedc6643
     public static $prefixLengthsPsr4 = array (
         'B' => 
         array (
+            'Blaj\\BlajMVC\\Repository\\' => 24,
             'Blaj\\BlajMVC\\Model\\' => 19,
             'Blaj\\BlajMVC\\Core\\Utils\\' => 24,
             'Blaj\\BlajMVC\\Core\\Routing\\' => 26,
@@ -19,6 +20,10 @@ class ComposerStaticInit3ec40ce7ce5e81ff7e940fb3cedc6643
     );
 
     public static $prefixDirsPsr4 = array (
+        'Blaj\\BlajMVC\\Repository\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/repository',
+        ),
         'Blaj\\BlajMVC\\Model\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/model',
