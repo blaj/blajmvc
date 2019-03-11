@@ -6,6 +6,8 @@ error_reporting(E_ALL);
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
+session_start();
+
 require_once '../config/config.php';
 require_once DIR_VENDOR.'autoload.php';
 require_once '../config/routes.php';
