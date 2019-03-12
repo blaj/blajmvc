@@ -1,6 +1,6 @@
 <?php
 
-namespace Blaj\BlajMVC\Core;
+namespace Blaj\BlajMVC\Core\Utils;
 
 class FlashMessage
 {
