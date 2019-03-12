@@ -9,6 +9,7 @@ use Blaj\BlajMVC\Repository\ArticleRepository;
 use Blaj\BlajMVC\Core\FormValidation\FormValidator;
 use Blaj\BlajMVC\Core\Utils\Translations;
 use Blaj\BlajMVC\Core\FlashMessage;
+use Blaj\BlajMVC\Core\Session;
 
 class HomeController extends Controller {
 
