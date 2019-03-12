@@ -4,19 +4,45 @@ namespace Blaj\BlajMVC\Core\Routing;
 
 class Route
 {
+    /**
+     * @var string
+     */
     protected $path;
 
+    /**
+     * @var string
+     */
     protected $controllerFile;
 
+    /**
+     * @var string
+     */
     protected $controllerClass;
 
+    /**
+     * @var string
+     */
     protected $controllerAction;
 
+    /**
+     * @var array
+     */
     protected $params;
 
+    /**
+     * @var array
+     */
     protected $defaults;
 
-    public function __construct($path, $config, $params = [], $defaults = [])
+    /**
+     * Route construct
+     *
+     * @param string
+     * @param string
+     * @param array
+     * @param array
+     */
+    public function __construct(string $path, string $config, array $params = [], array $defaults = [])
     {
         $this->path = HTTP_SERVER . $path;
 
@@ -29,7 +55,13 @@ class Route
         $this->defaults = $defaults;
     }
 
-    public function generateUrl($data)
+    /**
+     * Function to generate URL
+     *
+     * @param array|string
+     * @return string
+     */
+    public function generateUrl($data): string
     {
         if (is_array($data) && sizeof($data)>0) {
             $key_data = array_keys($data);
@@ -44,62 +76,98 @@ class Route
         }
     }
 
-    public function getPath()
+    /**
+     * @return string
+     */
+    public function getPath(): string
     {
         return $this->path;
     }
 
-    public function setPath($path)
+    /**
+     * @param string
+     */
+    public function setPath(string $path)
     {
         $this->path = $path;
     }
 
-    public function getControllerFile()
+    /**
+     * @return string
+     */
+    public function getControllerFile(): string
     {
         return $this->controllerFile;
     }
 
-    public function setControllerFiler($controllerFile)
+    /**
+     * @param string
+     */
+    public function setControllerFiler(string $controllerFile)
     {
         $this->controllerFile = $controllerFile;
     }
 
-    public function getControllerClass()
+    /**
+     * @return string
+     */
+    public function getControllerClass(): string
     {
         return $this->controllerClass;
     }
 
-    public function setControllerClass($controllerClass)
+    /**
+     * @param string
+     */
+    public function setControllerClass(string $controllerClass)
     {
         $this->controllerClass = $controllerClass;
     }
 
-    public function getControllerAction()
+    /**
+     * @return string
+     */
+    public function getControllerAction(): string
     {
         return $this->controllerAction;
     }
 
-    public function setControllerAction($controllerAction)
+    /**
+     * @param string
+     */
+    public function setControllerAction(string $controllerAction)
     {
         $this->controllerAction = $controllerAction;
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         return $this->params;
     }
 
-    public function setParams($params)
+    /**
+     * @param array
+     */
+    public function setParams(array $params)
     {
         $this->params = $params;
     }
 
-    public function getDefaults()
+    /**
+     * @return array
+     */
+    public function getDefaults(): array
     {
         return $this->defaults;
     }
 
-    public function setDefaults($defaults)
+    /**
+     * @param array
+     */
+    public function setDefaults(array $defaults)
     {
         $this->defaults = $defaults;
     }

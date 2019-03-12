@@ -4,6 +4,8 @@ namespace Blaj\BlajMVC\Core\Utils;
 
 class Translations
 {
+    //TODO: przerobic ze statycznych na obiektowe
+
     /**
      * @var string
      */
@@ -19,7 +21,7 @@ class Translations
      * @param array $toChanges
      * @return mixed|null
      */
-    public static function Translate(string $toTranslate, array $toChanges = [])
+    public static function translate(string $toTranslate, array $toChanges = [])
     {
         if (!isset(self::$lang))
             self::setLang(DEFAULT_LANG);

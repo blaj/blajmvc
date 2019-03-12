@@ -9,33 +9,57 @@ class FlashMessage
 
     }
 
-    public function info($name, $text)
+    /**
+     * @param string
+     * @param string
+     */
+    public function info(string $name, string $text)
     {
         $this->message($name, $text, 'info');
     }
 
-    public function success($name, $text)
+    /**
+     * @param string
+     * @param string
+     */
+    public function success(string $name, string $text)
     {
         $this->message($name, $text, 'success');
     }
 
-    public function warning($name, $text)
+    /**
+     * @param string
+     * @param string
+     */
+    public function warning(string $name, string $text)
     {
         $this->message($name, $text, 'warning');
     }
 
-    public function error($name, $text)
+    /**
+     * @param string
+     * @param string
+     */
+    public function error(string $name, string $text)
     {
         $this->message($name, $text, 'error');
     }
 
+    /**
+     * @param string
+     * @param string
+     * @param string
+     */
     public function message($name, $text, $type)
     {
         $_SESSION['flashMessage'][$name]['text'] = $text;
         $_SESSION['flashMessage'][$name]['type'] = $type;
     }
 
-    public function display($name)
+    /**
+     * @param string
+     */
+    public function display($name): string
     {
         $result = '';
 
@@ -47,6 +71,9 @@ class FlashMessage
         return $result;
     }
 
+    /**
+     * @param string
+     */
     public function clear($name)
     {
         unset($_SESSION['flashMessage'][$name]);
