@@ -3,7 +3,7 @@
 namespace Blaj\BlajMVC\Core;
 
 use Blaj\BlajMVC\Core\Routing\Router;
-use Blaj\BlajMVC\Core\FlashMessage;
+use Blaj\BlajMVC\Core\Utils\FlashMessage;
 
 class Controller
 {

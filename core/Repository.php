@@ -51,6 +51,8 @@ abstract class Repository
                 }
             }
         }
+
+        return null;
     }
 
     private function mapToModel(array $object): IModel
@@ -71,7 +73,6 @@ abstract class Repository
     public function findBy(array $options)
     {
         $result = [];
-        $queryStatement = '';
 
         $whereClause = '';;
         $whereConditions = [];
@@ -92,19 +93,14 @@ abstract class Repository
             $result[] = $this->mapToModel($item);
         }
 
-        if (count($result) == 1)
-            return $result[0];
-
         return $result;
     }
 
     public function findOneBy(array $options)
     {
-        //TODO: przetestowac bo cos dziwnie dziala hehe
-
         $result = $this->findBy($options);
 
-        return $result;
+        return $result[0];
     }
 
     public function findAll()

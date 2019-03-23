@@ -14,7 +14,7 @@ require_once '../config/translations.php';
 use Blaj\BlajMVC\Core\Utils\Session;
 use Blaj\BlajMVC\Core\Routing\Router;
 
-Session::start(3600);
+Session::start(SESSION_LIFTETIME);
 
 $router = new Router();
 $router->setUrl('http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);

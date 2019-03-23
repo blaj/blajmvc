@@ -6,7 +6,7 @@ class FlashMessage
 {
     public function __construct()
     {
-
+        //TODO: uzyc tu klasy Session
     }
 
     /**
