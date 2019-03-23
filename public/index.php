@@ -11,7 +11,12 @@ require_once DIR_VENDOR.'autoload.php';
 require_once '../config/routes.php';
 require_once '../config/translations.php';
 
-$router = new Blaj\BlajMVC\Core\Routing\Router();
+use Blaj\BlajMVC\Core\Utils\Session;
+use Blaj\BlajMVC\Core\Routing\Router;
+
+Session::start(SESSION_LIFTETIME);
+
+$router = new Router();
 $router->setUrl('http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
 
 if ($router->run()) {

@@ -9,20 +9,21 @@ class FormValidator
 {
 
     /**
-     * @var Array
+     * @var array
      */
-    private $rules = array();
+    private $rules;
 
     /**
-     * @var Array
+     * @var array
      */
-    private $errors = array();
+    private $errors;
 
     /**
      * FormValidator constructor.
-     * @param null $rules
+     *
+     * @param array
      */
-    public function __construct($rules = null)
+    public function __construct(array $rules = null)
     {
         if ($rules)
             foreach ($rules as $rule)
@@ -32,7 +33,7 @@ class FormValidator
     /**
      * @return bool
      */
-    public function run()
+    public function run(): bool
     {
         foreach ($this->rules as $rule) {
             $this->validate($rule);
@@ -61,10 +62,12 @@ class FormValidator
      * @param $ruleData
      * @return bool
      */
-    public function validate($ruleData) {
+    public function validate($ruleData)
+    {
         $rules_list = $ruleData->getRules();
         $rules_list = explode('|', $rules_list);
 
+        //TODO: dodac osbluge translate
         foreach ($rules_list as $rule) {
             $rule = explode(':', $rule);
             switch ($rule[0]) {
@@ -149,7 +152,7 @@ class FormValidator
      * @param $min
      * @return bool
      */
-    public function min_length($data, $min)
+    public function min_length(string $data, int $min): bool
     {
         if (strlen($data) >= $min)
             return true;
@@ -162,7 +165,7 @@ class FormValidator
      * @param $max
      * @return bool
      */
-    public function max_length($data, $max)
+    public function max_length(string $data, int $max): bool
     {
         if (strlen($data) <= $max)
             return true;
@@ -174,7 +177,7 @@ class FormValidator
      * @param $data
      * @return bool
      */
-    public function is_email($data)
+    public function is_email(string $data): bool
     {
         if (filter_var($data, FILTER_VALIDATE_EMAIL))
             return true;
@@ -186,7 +189,7 @@ class FormValidator
      * @param $data
      * @return bool
      */
-    public function is_int($data)
+    public function is_int(string $data): bool
     {
         if (filter_var($data, FILTER_VALIDATE_INT))
             return true;
@@ -198,7 +201,7 @@ class FormValidator
      * @param $data
      * @return bool
      */
-    public function is_float($data)
+    public function is_float(string $data): bool
     {
         if (filter_var($data, FILTER_VALIDATE_FLOAT))
             return true;
@@ -210,7 +213,7 @@ class FormValidator
      * @param $data
      * @return bool
      */
-    public function is_bool($data)
+    public function is_bool(string $data): bool
     {
         if (filter_var($data, FILTER_VALIDATE_BOOLEAN))
             return true;
@@ -222,7 +225,7 @@ class FormValidator
      * @param $data
      * @return bool
      */
-    public function is_alpha($data)
+    public function is_alpha(string $data): bool
     {
         if (filter_var($data, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^[a-zA-Z]+$/'))))
             return true;
@@ -234,7 +237,7 @@ class FormValidator
      * @param $data
      * @return bool
      */
-    public function is_alphanum($data)
+    public function is_alphanum(string $data): bool
     {
         if (filter_var($data, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^[a-zA-Z0-9]+$/'))))
             return true;
@@ -246,7 +249,7 @@ class FormValidator
      * @param $data
      * @return bool
      */
-    public function is_url($data)
+    public function is_url(string $data): bool
     {
         if (filter_var($data, FILTER_VALIDATE_URL))
             return true;
@@ -254,7 +257,12 @@ class FormValidator
         return false;
     }
 
-    public function is_equalto($from, $to)
+    /**
+     * @param string
+     * @param string
+     * @return bool
+     */
+    public function is_equalto(string $from, string $to): bool
     {
         if ($from == $to)
             return true;
@@ -262,7 +270,13 @@ class FormValidator
         return false;
     }
 
-    public function is_unique($data, $table, $name)
+    /**
+     * @param string
+     * @param string
+     * @param string
+     * @return bool
+     */
+    public function is_unique(string $data, string $table, string $name): bool
     {
         try {
             $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PSWD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
@@ -284,7 +298,7 @@ class FormValidator
      * @param $text
      * @return string
      */
-    public function remove_tags($text)
+    public function remove_tags(string $text): string
     {
         $text = trim(strip_tags($text));
 
@@ -296,9 +310,9 @@ class FormValidator
 
     /**
      * @param $name
-     * @return mixed
+     * @return string
      */
-    public function getError($name)
+    public function getError(string $name): string
     {
         return $this->errors[$name];
     }
@@ -306,7 +320,7 @@ class FormValidator
     /**
      * @return Array
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->errors;
     }
@@ -314,13 +328,14 @@ class FormValidator
     /**
      * @return string
      */
-    public function showErrors()
+    public function showErrors(): string
     {
         $html = '<ul>';
-        foreach ($this->errors as $error)
-            foreach ($error as $err)
-            $html .= '<li>'. $err .'</li>';
-
+        foreach ($this->errors as $error) {
+                foreach ($error as $err) {
+                    $html .= '<li>'. $err .'</li>';
+                }
+        }
         $html .= '</ul>';
 
         return $html;
