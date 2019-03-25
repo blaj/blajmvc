@@ -3,7 +3,7 @@
   "description": "Mini framework MVC od Blaj",
   "keywords": ["BlajMVC", "Blaj"],
   "homepage": "http://blaj.pl",
-  "type": "education, mvc",
+  "type": "education",
   "license": "GNU GPL",
   "require": {
     "php": ">=7.0"
