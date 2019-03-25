@@ -4,7 +4,7 @@
   "keywords": ["BlajMVC", "Blaj"],
   "homepage": "http://blaj.pl",
   "type": "education",
-  "license": "GNU GPL",
+  "license": "MIT",
   "require": {
     "php": ">=7.0"
   },
