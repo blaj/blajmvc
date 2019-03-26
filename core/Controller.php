@@ -5,7 +5,7 @@ namespace Blaj\BlajMVC\Core;
 use Blaj\BlajMVC\Core\Routing\Router;
 use Blaj\BlajMVC\Core\Utils\FlashMessage;
 
-class Controller
+abstract class Controller extends ACL
 {
     public $flashMessage;
 
@@ -27,7 +27,7 @@ class Controller
         }
     }
 
-    public  function path($name, $data)
+    public function path($name, $data)
     {
         $collection = Router::getRouteCollection();
         $route = $collection->getRoute($name);

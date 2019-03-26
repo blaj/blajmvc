@@ -6,7 +6,8 @@
   "type": "education, mvc",
   "license": "GNU GPL",
   "require": {
-    "php": ">=7.0"
+    "php": ">=7.0",
+    "blaj/blajmvc": "master"
   },
   "autoload": {
     "psr-4": {
@@ -15,6 +16,7 @@
       "Blaj\\BlajMVC\\Core\\FormValidation\\": "core/form_validation/",
       "Blaj\\BlajMVC\\Core\\Utils\\": "core/utils/",
       "Blaj\\BlajMVC\\Model\\": "src/model/",
+      "Blaj\\BlajMVC\\Repository\\": "src/repository/",
       "Blaj\\BlajMVC\\Controller\\": "src/controller/"
     }
   }

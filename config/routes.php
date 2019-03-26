@@ -11,17 +11,12 @@ $routeCollection->addRoute('home', new Route(
     'HomeController@index'
 ));
 
-$routeCollection->addRoute('article/read', new Route(
-    'article/{id}',
-    'HomeController@read',
+$routeCollection->addRoute('home/show', new Route(
+    'home/{id}',
+    'HomeController@show',
     [
         'id' => '\d+'
     ]
-));
-
-$routeCollection->addRoute('article/add', new Route(
-    'article/add',
-    'HomeController@add'
 ));
 
 Router::setRouteCollection($routeCollection);

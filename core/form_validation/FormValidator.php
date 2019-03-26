@@ -39,7 +39,7 @@ class FormValidator
             $this->validate($rule);
         }
 
-        if (count($this->errors))
+        if (!empty($this->errors))
             return false;
 
         return true;
