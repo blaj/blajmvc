@@ -1,10 +1,10 @@
 {
-  "name": "Blaj/BlajMVC",
+  "name": "blaj/blajmvc",
   "description": "Mini framework MVC od Blaj",
   "keywords": ["BlajMVC", "Blaj"],
   "homepage": "http://blaj.pl",
-  "type": "education, mvc",
-  "license": "GNU GPL",
+  "type": "education",
+  "license": "MIT",
   "require": {
     "php": ">=7.0",
     "blaj/blajmvc": "master"
