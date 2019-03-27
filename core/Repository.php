@@ -4,6 +4,8 @@ namespace Blaj\BlajMVC\Core;
 
 use Blaj\BlajMVC\Core\DB;
 use Blaj\BlajMVC\Core\IModel;
+use PDO;
+use ReflectionClass;
 
 abstract class Repository
 {
@@ -13,7 +15,7 @@ abstract class Repository
 
     public function __construct()
     {
-        $class = new \ReflectionClass($this);
+        $class = new ReflectionClass($this);
 
         if (empty($this->tableName))
             $this->tableName = substr(strtolower($class->getShortName()), 0, -10);
@@ -24,7 +26,7 @@ abstract class Repository
 
     public function __call($name, $arguments)
     {
-        $class = new \ReflectionClass(get_called_class());
+        $class = new ReflectionClass(get_called_class());
         $properties = $class->getProperties(\ReflectionProperty::IS_PRIVATE);
 
         foreach ($properties as $property) {
@@ -46,8 +48,8 @@ abstract class Repository
                 }
             } else if (substr($name, 0, 11) == 'findCountBy' && strlen($name) > 11) {
                 if (ucfirst($property->getName()) == substr($name, 11, strlen($name))) {
-                    //TODO: zrobic
-                    echo 'jest count by';
+                    $key = substr($name, 11, strlen($name));
+                    return $this->countBy([$key => $arguments[0]]);
                 }
             }
         }
@@ -87,7 +89,7 @@ abstract class Repository
         $queryStatement = 'SELECT * FROM ' . $this->tableName . $whereClause;
 
         $query = DB::getInstance()->query($queryStatement);
-        $items = $query->fetchAll(\PDO::FETCH_ASSOC);
+        $items = $query->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($items as $item) {
             $result[] = $this->mapToModel($item);
@@ -108,14 +110,52 @@ abstract class Repository
         return $this->findBy([]);
     }
 
-    public function update($model)
+    public function countBy(array $options)
     {
-        //TODO: Zrobic to dziadostwo
+        return null;
+    }
+
+    public function countAll()
+    {
+        return $this->countBy([]);
+    }
+
+    public function remove(Imodel $model)
+    {
+        $class = new ReflectionClass($model);
+
+        $sqlQuery = 'DELETE FROM ' . $this->tableName . ' WHERE id = :id';
+        $stmt = $this->bindValue($sqlQuery, $class, $model);
+
+        $result = $stmt->execute();
+
+        return $result;
+    }
+
+    public function update(IModel $model)
+    {
         $columnNames = '';
-        $values = '';
 
         $setConditions = [];
-        $valuesConditions = [];
+
+        $class = new ReflectionClass($model);
+        $properties = $class->getProperties(\ReflectionProperty::IS_PRIVATE);
+
+        foreach ($properties as $property) {
+            $property->setAccessible(true);
+
+            if (!empty($property->getValue($model))) {
+                $setConditions[] = $property->getName() . ' = :' . $property->getName();
+            }
+
+            $columnNames = implode(', ', $setConditions);
+        }
+
+        $sqlQuery = 'UPDATE ' . $this->tableName . ' SET ' . $columnNames . ' WHERE id = :id';
+        $stmt = $this->bindValue($sqlQuery, $class, $model);
+        $result = $stmt->execute();
+
+        return $result;
     }
 
     public function add(IModel $model)
@@ -126,7 +166,7 @@ abstract class Repository
         $setConditions = [];
         $valuesConditions = [];
 
-        $class = new \ReflectionClass($model);
+        $class = new ReflectionClass($model);
         $properties = $class->getProperties(\ReflectionProperty::IS_PRIVATE);
 
         foreach ($properties as $property) {
@@ -134,17 +174,50 @@ abstract class Repository
 
             if (!empty($property->getValue($model))) {
                 $setConditions[] = $property->getName();
-                $valuesConditions[] = '\''.$property->getValue($model).'\'';
+                $valuesConditions[] = ':' . $property->getName();
             }
 
             $columnNames = implode(', ', $setConditions);
             $values = implode(', ', $valuesConditions);
         }
 
-        // TODO: zabezpieczyc przed sql injection
         $sqlQuery = 'INSERT INTO `'. $this->tableName .'` ('. $columnNames.') VALUES ('. $values. ');';
-        $result = DB::getInstance()->prepare($sqlQuery)->execute();
+        $stmt = $this->bindValue($sqlQuery, $class, $model);
+        $result = $stmt->execute();
 
         return $result;
+    }
+
+    private function bindValue(string $sqlQuery, ReflectionClass $class, $model)
+    {
+        $properties = $class->getProperties(\ReflectionProperty::IS_PRIVATE);
+        $stmt = DB::getInstance()->prepare($sqlQuery);
+
+        foreach ($properties as $property) {
+            $property->setAccessible(true);
+
+            if (!empty($property->getValue($model))) {
+                $valueType = gettype($property->getValue($model));
+
+                switch ($valueType) {
+                    case 'boolean':
+                        $type = PDO::PARAM_BOOL;
+                        break;
+                    case 'integer':
+                        $type = PDO::PARAM_INT;
+                        break;
+                    case 'null':
+                        $type = PDO::PARAM_NULL;
+                        break;
+                    default:
+                        $type = PDO::PARAM_STR;
+                        break;
+                }
+
+                $stmt->bindValue(':' . $property->getName(), $property->getValue($model), $type);
+            }
+        }
+
+        return $stmt;
     }
 }
