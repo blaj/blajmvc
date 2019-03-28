@@ -112,7 +112,9 @@ abstract class Repository
 
     public function countBy(array $options)
     {
-        return null;
+        $result = $this->findBy($options);
+
+        return count($result);
     }
 
     public function countAll()
@@ -122,11 +124,8 @@ abstract class Repository
 
     public function remove(Imodel $model)
     {
-        $class = new ReflectionClass($model);
-
         $sqlQuery = 'DELETE FROM ' . $this->tableName . ' WHERE id = :id';
-        $stmt = $this->bindValue($sqlQuery, $class, $model);
-
+        $stmt = $this->bindValue($sqlQuery, $model, true);
         $result = $stmt->execute();
 
         return $result;
@@ -134,25 +133,9 @@ abstract class Repository
 
     public function update(IModel $model)
     {
-        $columnNames = '';
-
-        $setConditions = [];
-
-        $class = new ReflectionClass($model);
-        $properties = $class->getProperties(\ReflectionProperty::IS_PRIVATE);
-
-        foreach ($properties as $property) {
-            $property->setAccessible(true);
-
-            if (!empty($property->getValue($model))) {
-                $setConditions[] = $property->getName() . ' = :' . $property->getName();
-            }
-
-            $columnNames = implode(', ', $setConditions);
-        }
-
-        $sqlQuery = 'UPDATE ' . $this->tableName . ' SET ' . $columnNames . ' WHERE id = :id';
-        $stmt = $this->bindValue($sqlQuery, $class, $model);
+        $data = $this->getColumnNamesAndValues($model, true);
+        $sqlQuery = 'UPDATE ' . $this->tableName . ' SET ' . $data['columnNames'] . ' WHERE id = :id';
+        $stmt = $this->bindValue($sqlQuery, $model);
         $result = $stmt->execute();
 
         return $result;
@@ -160,9 +143,16 @@ abstract class Repository
 
     public function add(IModel $model)
     {
-        $columnNames = '';
-        $values = '';
+        $data = $this->getColumnNamesAndValues($model);
+        $sqlQuery = 'INSERT INTO `'. $this->tableName .'` ('. $data['columnNames'].') VALUES ('. $data['values']. ');';
+        $stmt = $this->bindValue($sqlQuery, $model);
+        $result = $stmt->execute();
 
+        return $result;
+    }
+
+    private function getColumnNamesAndValues(IModel $model, bool $setType = false)
+    {
         $setConditions = [];
         $valuesConditions = [];
 
@@ -173,28 +163,34 @@ abstract class Repository
             $property->setAccessible(true);
 
             if (!empty($property->getValue($model))) {
-                $setConditions[] = $property->getName();
-                $valuesConditions[] = ':' . $property->getName();
+                if ($setType) {
+                    $setConditions[] = $property->getName() . ' = :' . $property->getName();
+                } else {
+                    $setConditions[] = $property->getName();
+                    $valuesConditions[] = ':' . $property->getName();
+                }
             }
-
-            $columnNames = implode(', ', $setConditions);
-            $values = implode(', ', $valuesConditions);
         }
 
-        $sqlQuery = 'INSERT INTO `'. $this->tableName .'` ('. $columnNames.') VALUES ('. $values. ');';
-        $stmt = $this->bindValue($sqlQuery, $class, $model);
-        $result = $stmt->execute();
+        $result['columnNames'] = implode(', ', $setConditions);
+        $result['values'] = implode(', ', $valuesConditions);
 
         return $result;
     }
 
-    private function bindValue(string $sqlQuery, ReflectionClass $class, $model)
+    private function bindValue(string $sqlQuery, Imodel $model, $onlyId = false)
     {
+        $class = new ReflectionClass($model);
         $properties = $class->getProperties(\ReflectionProperty::IS_PRIVATE);
+
         $stmt = DB::getInstance()->prepare($sqlQuery);
 
         foreach ($properties as $property) {
             $property->setAccessible(true);
+
+            if ($onlyId && $property->getName() != 'id') {
+                continue;
+            }
 
             if (!empty($property->getValue($model))) {
                 $valueType = gettype($property->getValue($model));

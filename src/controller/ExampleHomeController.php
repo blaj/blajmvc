@@ -5,7 +5,6 @@ namespace Blaj\BlajMVC\Controller;
 use Blaj\BlajMVC\Core\Controller;
 use Blaj\BlajMVC\Core\Utils\Session;
 use Blaj\BlajMVC\Core\View;
-use Blaj\BlajMVC\Model\ExampleArticleModel;
 use Blaj\BlajMVC\Repository\ExampleArticleRepository;
 
 class ExampleHomeController extends Controller {
@@ -28,11 +27,6 @@ class ExampleHomeController extends Controller {
     public function index()
     {
         $articles = $this->exampleArticleRepository->findAll();
-
-        $article = new ExampleArticleModel();
-        $article->setId(3);
-
-        $this->exampleArticleRepository->remove($article);
 
         $this->view->body = new View('example_home/index.phtml');
         $this->view->body->articles = $articles;
