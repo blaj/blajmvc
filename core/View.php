@@ -46,6 +46,18 @@ class View
         $this->data[$name] = $value;
     }
 
+    public function sendJSON($data)
+    {
+        header('Content-Type: application/json');
+        return json_encode($data);
+    }
+
+    public function renderJSONP($data)
+    {
+        header('Content-Type: application/json');
+        return $_GET['callback'] . '(' . json_encode($data) . ')';
+    }
+
     public function get($name)
     {
         return array_key_exists($name, $this->data) ? $this->data[$name] : null;
